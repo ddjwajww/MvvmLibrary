@@ -1,0 +1,260 @@
+﻿<Page xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  x:Class="HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking" 
+      xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+      
+      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+      xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+      xmlns:local="clr-namespace:WPFUIDESİGN" xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HomePage">
+    <Grid>
+        <dxdo:DockLayoutManager>
+            <dxdo:LayoutGroup Caption="LayoutRoot">
+                <dxdo:LayoutPanel                    
+                    AllowClose="False"
+                    ShowCaption="False"	    
+                    AllowSizing="True"
+                    ItemWidth="5*">
+                    <dxg:GridControl x:Name="grid" Grid.Column="0" ShowBorder="False" SelectedItem="{Binding SelectedBook}" ItemsSource="{Binding Books}" SelectionMode="Row" AutoGenerateColumns="None" EnableSmartColumnsGeneration="True">
+                        <dxg:GridControl.View>
+                            <dxg:TableView ShowUpdateRowButtons="OnCellValueChange"                                           
+                                       AllowScrollAnimation="True"
+                                       AutoWidth="True"
+                                       ShowDataNavigator="True"                                   
+                                       ShowVerticalLines="False"                                   
+                                       ShowHorizontalLines="True"                                     
+                                       ShowIndicator="True"  
+                                       NavigationStyle="Row"
+                                       />
+                           
+                                
+                        </dxg:GridControl.View>
+                        <dxg:GridColumn Header="Kitap Adı" FieldName="Title" IsSmart="True" />
+                        <dxg:GridColumn Header="Yazar Adı" FieldName="AuthorName" IsSmart="True"/>
+                        <dxg:GridColumn Header="Kategori Adı" FieldName="CategoryName" IsSmart="True"/>
+                        <dxg:GridColumn Header="Yayın Tarihi" FieldName="PublishDate" IsSmart="True"/>
+                        <dxg:GridColumn Header="Alınabilir Kopya" FieldName="AvailableCopies" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn Header="Toplam Kopya" FieldName="TotalCopies" IsSmart="True">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn Header="Fotoğraf" FieldName="PicturePath" IsSmart="True">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="/Image/foto.jpeg" Width="50" Height="50" />
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>                   
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand EventName="SelectionChanged" Command="{Binding SelectChangeEmployeeCommand}"/>
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxg:GridControl>
+                </dxdo:LayoutPanel>
+                <dxdo:LayoutPanel ItemWidth="2.5*"      
+                              AllowClose="False"
+                              ShowCaption="False"	         
+                              AllowSizing="True">
+
+                    <dxlc:LayoutControl>
+                        <dxlc:LayoutGroup Orientation="Vertical" Margin="0,0,1,0">
+                            <Ellipse Width="100" Height="100" Margin="20,10,0,10">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding SelectedBook.PicturePath}" Stretch="UniformToFill"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+
+                            <dxlc:LayoutItem Label="Kitap Adı :" Height="24" Margin="0,0,3,6">
+                                <dxe:TextEdit x:Name="KitapAdı" Style="{StaticResource CustomTextEditStyle}" Text="{Binding SelectedBook.Title}" Margin="10,0,0,0"/>
+                            </dxlc:LayoutItem>
+
+                            <dxlc:LayoutItem Label="Kategori :" Height="24" Margin="0,1,3,6">
+                                <dxe:TextEdit x:Name="Kategori" Style="{StaticResource CustomTextEditStyle}" Text="{Binding SelectedBook.CategoryName}" Margin="10,0,0,0"/>
+                            </dxlc:LayoutItem>
+
+                            <dxlc:LayoutItem Label="Yazar :" Height="24" Margin="0,1,3,6">
+                                <dxe:TextEdit x:Name="Yazar" Style="{StaticResource CustomTextEditStyle}" Text="{Binding SelectedBook.AuthorName}" Margin="10,0,0,0"/>
+                            </dxlc:LayoutItem>
+
+                            <dxlc:LayoutItem Label="Alınabilir Kopya :" Height="24" Margin="0,1,3,6">
+                                <dxe:TextEdit x:Name="AlınabilirKopya" Style="{StaticResource CustomTextEditStyle}" Text="{Binding SelectedBook.AvailableCopies}" Margin="10,0,0,0"/>
+                            </dxlc:LayoutItem>
+
+                            <dxlc:LayoutItem Label="Toplam Kopya :" Height="24" Margin="0,1,3,6">
+                                <dxe:TextEdit x:Name="ToplamKopya" Style="{StaticResource CustomTextEditStyle}" Text="{Binding SelectedBook.TotalCopies}" Margin="10,0,0,0"/>
+                            </dxlc:LayoutItem>
+                            
+                            <StackPanel Orientation="Horizontal" Height="40" FlowDirection="RightToLeft" Margin="-16,250,3,0">
+                                <dx:SimpleButton Style="{StaticResource CustomButtonEditStyle}" Command="{Binding BookUpdateCommand}" Width="80" Height="24" Content="Güncelle"  Margin="0,0,3,0" />
+                                <dx:SimpleButton Style="{StaticResource CustomButtonEditStyle}" Command="{Binding BookDeleteCommand}" Width="80" Height="24" Content="Sil"  Margin="0,0,3,0" />
+                                <dx:SimpleButton Style="{StaticResource CustomButtonEditStyle}" Command="{Binding BookDeleteCommand}" Width="80" Height="24" Content="Sil"  Margin="0,0,3,0" Visibility="Hidden"/>
+                                <dx:SimpleButton Style="{StaticResource CustomButtonEditStyle}" Command="{Binding BookEmptyFormCommand}" Width="80" Height="24" Content="Formu Sil"  Margin="-10,0,0,0" />
+                            </StackPanel>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutControl>
+                </dxdo:LayoutPanel>
+                <dxdo:LayoutPanel  
+                    AllowClose="False"
+                    Background="#635b95"
+                    ShowCaption="False"
+                    ItemWidth="30" 
+                    AllowSizing="True">
+                    <dxlc:LayoutGroup>
+
+                        <Button Background="#7163ba"
+                               Foreground="White"
+                               Click="Button_Click" 
+                               Width="30"
+                               MinWidth="30"
+                               BorderThickness="0"
+                               HorizontalAlignment="Left">
+                             Ekle
+                        </Button>
+                        <StackPanel>
+
+                            <TextBlock HorizontalAlignment="Center" Foreground="White" Margin="0 10 0 20" FontSize="20">Yeni Kitap Ekle</TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
+                                <Label Content="Kitap Adı :" Foreground="White" Width="101"/>
+
+                                <TextBox Width="200" Height="24"  x:Name="txtTitle" VerticalContentAlignment="Center" >
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
+                                <Label Content="Kategori  :" Foreground="White" Width="101"/>
+
+                                <TextBox Width="200" Height="24" x:Name="txtCategory" VerticalContentAlignment="Center" >
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
+                                <Label Content="Yazar  :" Foreground="White" Width="101"/>
+
+                                <TextBox Width="200" Height="24" x:Name="txtAuthor" VerticalContentAlignment="Center" >
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
+                                <Label Content="Alınabilir Kopya  :" Foreground="White" Width="101"/>
+
+                                <TextBox Width="200" Height="24" x:Name="txtAvailableCopies" VerticalContentAlignment="Center" >
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0" >
+                                <Label Content="Toplam Kopya  :" Foreground="White" Width="101"/>
+
+                                <TextBox Width="200" Height="24" x:Name="txtTotalCopies" VerticalContentAlignment="Center" >
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0 " >
+                                <Label Content="Yayın Tarihi :" Foreground="White" Width="101"/>
+
+                                <dxe:DateEdit Width="200" x:Name="txtPublishDate" Height="24" CornerRadius="3">
+
+                                </dxe:DateEdit>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0 " >
+                                <Label Content="Yayın Tarihi :" Foreground="White" Width="101"/>
+
+                                <ComboBox ></ComboBox>
+                            </StackPanel>
+
+
+
+
+
+
+                        </StackPanel>
+                        
+                    </dxlc:LayoutGroup>
+
+                </dxdo:LayoutPanel>                
+            </dxdo:LayoutGroup>
+        </dxdo:DockLayoutManager>
+       
+    </Grid>
+</Page>
